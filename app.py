@@ -65,11 +65,12 @@ if st.button("🔽 Obtener datos"):
                 dividends.index = dividends.index.tz_localize(None)
                 precios_volumen = precios_volumen.reset_index()
                 precios_volumen['Date'] = precios_volumen['Date'].dt.strftime('%d/%m/%Y')
+                
+                dividends_df = dividends.rename("Dividendo Pagado").to_frame().reset_index()
+                dividends_df['Date'] = dividends_df['Date'].dt.strftime('%d/%m/%Y')
                 with pd.ExcelWriter(f"{ticker_input}_datos_completos.xlsx") as writer:
                     precios_volumen.to_excel(writer, sheet_name="Precios y Volumen", index=False)
-                    dividends_df.to_excel(writer, sheet_name="Dividendos", index=False)
-                    dividends_df = dividends.rename("Dividendo Pagado").to_frame().reset_index()
-                    dividends_df['Date'] = dividends_df['Date'].dt.strftime('%d/%m/%Y')                    
+                    dividends_df.to_excel(writer, sheet_name="Dividendos", index=False)                                  
                 with open(f"{ticker_input}_datos_completos.xlsx", "rb") as f:
                     st.download_button(
                         "📥 Descargar Excel completo (con dividendos)",
