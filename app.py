@@ -72,19 +72,19 @@ if st.button("🔽 Obtener datos"):
                 with pd.ExcelWriter(f"{ticker_input}_datos_completos.xlsx") as writer:
                     precios_volumen.to_excel(writer, sheet_name="Precios y Volumen", index=False)
                     dividends_df.to_excel(writer, sheet_name="Dividendos", index=False)
+                if not dividends.empty:
+                    st.subheader("💰 Pagos de Dividendos")
+                    st.dataframe(dividends_df)
+                else:
+                    st.info("ℹ️ No se encontraron dividendos para este activo.")                                                 
                 
-                with pd.ExcelWriter(f"{ticker_input}_datos_completos.xlsx") as writer:
-                    precios_volumen.to_excel(writer, sheet_name="Precios y Volumen", index=False)
-                    dividends_df.to_excel(writer, sheet_name="Dividendos", index=False)                                  
                 with open(f"{ticker_input}_datos_completos.xlsx", "rb") as f:
                     st.download_button(
-                        "📥 Descargar Excel completo (con dividendos)",
+                        "📥 Descargar Excel completo",
                         f,
                         file_name=f"{ticker_input}_datos_completos.xlsx",
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                     )
-            else:
-                st.info("ℹ️ No se encontraron dividendos para este activo.")
-
+              
     except Exception as e:
         st.error(f"❌ Ocurrió un error: {e}")
