@@ -34,7 +34,7 @@ if st.button("🔽 Obtener datos"):
 
         # Verificación de existencia de datos
         if data.empty:
-            st.warning(No se encontraron datos para los criterios seleccionados.")
+            st.warning("No se encontraron datos para los criterios seleccionados.")
         else:
             # Preparar tabla precios + volumen
             precios_volumen = data[['Close', 'Volume']].rename(columns={
